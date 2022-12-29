@@ -16,6 +16,7 @@ namespace Code.Scripts
             }
         }
 
+        
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Key"))

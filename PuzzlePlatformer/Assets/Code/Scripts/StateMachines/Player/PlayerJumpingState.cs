@@ -8,6 +8,7 @@ namespace Code.Scripts.StateMachines.Player
 
         public PlayerJumpingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+        
         public override void Enter()
         {
             StateMachine.ForceReceiver.Jump(StateMachine.jumpForce);

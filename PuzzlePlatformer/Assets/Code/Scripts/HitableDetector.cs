@@ -15,6 +15,7 @@ namespace Code.Scripts
                 OnHitableDetect?.Invoke(other.transform);
             }
         }
+        
 
         private void OnTriggerExit(Collider other)
         {

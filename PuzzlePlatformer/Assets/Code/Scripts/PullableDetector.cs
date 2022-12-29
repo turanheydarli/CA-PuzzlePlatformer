@@ -16,6 +16,7 @@ namespace Code.Scripts
                 OnPullableDetect?.Invoke(other.transform);
             }
         }
+        
 
         private void OnTriggerExit(Collider other)
         {

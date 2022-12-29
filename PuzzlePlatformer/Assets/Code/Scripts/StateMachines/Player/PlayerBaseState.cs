@@ -11,6 +11,7 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine = stateMachine;
         }
 
+        
         protected void Move(float deltaTime)
         {
             Move(Vector3.zero, deltaTime);

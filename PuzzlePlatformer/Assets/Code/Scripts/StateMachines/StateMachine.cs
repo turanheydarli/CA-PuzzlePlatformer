@@ -5,7 +5,7 @@ namespace Code.Scripts.StateMachines
     public class StateMachine : MonoBehaviour
     {
         private State _currentState;
-        
+
         public void SwitchState(State newState)
         {
             _currentState?.Exit();

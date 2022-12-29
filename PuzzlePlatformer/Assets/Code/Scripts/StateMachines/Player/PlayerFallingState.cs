@@ -8,6 +8,7 @@ namespace Code.Scripts.StateMachines.Player
 
         public PlayerFallingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
+            
         }
 
         public override void Enter()

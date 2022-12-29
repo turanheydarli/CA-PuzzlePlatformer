@@ -15,6 +15,7 @@ namespace Code.Scripts
                 OnButtonPress?.Invoke();
             }
         }
+        
 
         private void OnTriggerExit(Collider other)
         {

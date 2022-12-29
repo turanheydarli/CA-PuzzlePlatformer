@@ -27,6 +27,7 @@ namespace Code.Scripts
             _impact = Vector3.SmoothDamp(_impact, Vector3.zero, ref _dampingVelocity, drag);
             
         }
+        
 
         public void Reset()
         {

@@ -10,6 +10,7 @@ namespace Code.Scripts.StateMachines.Player
         private Transform _canPick;
         private Transform _canHit;
         private Transform _canPull;
+        
 
         public PlayerMovingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 

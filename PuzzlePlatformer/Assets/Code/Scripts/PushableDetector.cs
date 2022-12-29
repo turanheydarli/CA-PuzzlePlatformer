@@ -7,6 +7,7 @@ namespace Code.Scripts
     {
         public event Action<ControllerColliderHit> OnPushableDetect;
 
+        
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             if (hit.transform.CompareTag("Pushable"))

@@ -13,6 +13,7 @@ namespace Code.Scripts.StateMachines.Player
         [SerializeField] public float pullingMovementSpeed = 3f;
         [SerializeField] public float pullingSmoothTurnTime =  0.07f;
 
+        
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
 
         public Transform PickedItem { get; set; }

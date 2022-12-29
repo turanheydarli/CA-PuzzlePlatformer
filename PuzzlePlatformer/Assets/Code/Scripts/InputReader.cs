@@ -13,6 +13,7 @@ namespace Code.Scripts
         public event Action OnDrop;
         public event Action OnHit;
         public event Action OnPick;
+        
 
         private Controls _controls;
 

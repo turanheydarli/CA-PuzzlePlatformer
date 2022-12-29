@@ -11,6 +11,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             _pullable = pullable;
         }
+        
 
         public override void Enter()
         {

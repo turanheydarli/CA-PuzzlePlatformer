@@ -14,6 +14,7 @@ namespace Code.Scripts
                 elevatorHandler.CallElevator();
             }
         }
+        
 
         private void OnTriggerExit(Collider other)
         {

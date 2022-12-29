@@ -14,6 +14,7 @@ namespace Code.Scripts
         {
             _home = transform.position;
         }
+        
         public void CallElevator()
         {
             transform.DOMove(goTo, duration);
