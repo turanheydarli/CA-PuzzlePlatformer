@@ -11,11 +11,10 @@ namespace Code.Scripts.StateMachines.Player
         {
             _pullable = pullable;
         }
-        
 
         public override void Enter()
         {
-            StateMachine.InputReader.OnDrop += Drop;
+            StateMachine.InputReader.OnDrop += Drop;    
 
             if (_pullable.parent.TryGetComponent(out Rigidbody connect))
                 StateMachine.HolderJoint.connectedBody = connect;

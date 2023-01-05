@@ -11,7 +11,6 @@ namespace Code.Scripts
             pressurePad.OnButtonPress += HandleBridgeOpening;
             pressurePad.OnButtonRelease += HandleBridgeClosing;
         }
-        
 
         private void HandleBridgeOpening()
         {

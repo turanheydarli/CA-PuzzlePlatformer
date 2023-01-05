@@ -2,13 +2,12 @@
 
 namespace Code.Scripts.StateMachines.Player
 {
-    public class PlayerFallingState:PlayerBaseState
+    public class PlayerFallingState : PlayerBaseState
     {
         private Vector3 _momentum;
 
         public PlayerFallingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
-            
         }
 
         public override void Enter()
@@ -25,7 +24,6 @@ namespace Code.Scripts.StateMachines.Player
             {
                 ReturnToLocomotion();
             }
-
         }
 
         public override void Exit()

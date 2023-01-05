@@ -19,7 +19,7 @@ namespace Code.Scripts.StateMachines.Player
 
         protected void Move(Vector3 motion, float deltaTime)
         {
-            StateMachine.Controller.Move((motion + StateMachine.ForceReceiver.Movement) * deltaTime);
+            StateMachine.Controller.Move((motion + StateMachine.MovementHandler.Movement) * deltaTime);
         }
         protected void ReturnToLocomotion()
         {
