@@ -802,7 +802,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     Android: OBI_ONI_SUPPORTED
-    Standalone: OBI_ONI_SUPPORTED
+    Standalone: OBI_ONI_SUPPORTED;POSEIDON;POSEIDON_URP
     iPhone: OBI_ONI_SUPPORTED
   additionalCompilerArguments: {}
   platformArchitecture: {}

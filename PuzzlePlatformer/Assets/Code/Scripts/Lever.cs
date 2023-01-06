@@ -12,7 +12,6 @@ namespace Code.Scripts
 
         public void Interact()
         {
-            Debug.Log("Lever hitted");
             isOpened = !isOpened;
 
             if (isOpened)
