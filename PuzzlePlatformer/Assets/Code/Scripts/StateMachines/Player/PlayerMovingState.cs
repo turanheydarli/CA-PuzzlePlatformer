@@ -6,13 +6,16 @@ namespace Code.Scripts.StateMachines.Player
     public class PlayerMovingState : PlayerBaseState
     {
         private Vector3 _direction;
+        private Vector3 _previousVelocity;
 
         private Transform _canPick;
         private Transform _canHit;
         private Transform _canPull;
-        
 
-        public PlayerMovingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
+
+        public PlayerMovingState(PlayerStateMachine stateMachine) : base(stateMachine)
+        {
+        }
 
         public override void Enter()
         {
@@ -21,23 +24,26 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnDrop += Drop;
 
             StateMachine.PushableDetector.OnPushableDetect += HandlePushableDetect;
-            
+
             StateMachine.PickableDetector.OnPickableDetect += HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose += HandlePickableLoose;
-            
+
             StateMachine.HitableDetector.OnHitableDetect += HandleHitableDetect;
             StateMachine.HitableDetector.OnHitableLoose += HandleHitableLoose;
             StateMachine.InputReader.OnHit += Hit;
-            
+
             StateMachine.PullableDetector.OnPullableDetect += HandlePullableDetect;
             StateMachine.PullableDetector.OnPullableLoose += HandlePullableLoose;
             StateMachine.InputReader.OnHold += Pull;
-
         }
 
         public override void Trick(float deltaTime)
         {
             _direction = CalculateMovement();
+
+            float targetSpeed = StateMachine.movementSpeed * _direction.magnitude;
+
+            StateMachine.currentSpeed = Mathf.MoveTowards(StateMachine.currentSpeed, targetSpeed, StateMachine.acceleration * deltaTime);
 
             if (_direction.magnitude > 0.01f)
             {
@@ -46,9 +52,15 @@ namespace Code.Scripts.StateMachines.Player
                     ref StateMachine.turnSmoothVelocity, StateMachine.smoothTurnTime);
 
                 StateMachine.transform.rotation = Quaternion.Euler(0, angle, 0);
-
-                Move(_direction * StateMachine.movementSpeed, deltaTime);
             }
+
+            Move(_direction * StateMachine.currentSpeed, deltaTime);
+
+            Vector3 velocity = StateMachine.Controller.velocity;
+
+            _previousVelocity = new Vector3(velocity.x, 0, velocity.z);
+
+            StateMachine.currentSpeed = _previousVelocity.magnitude;
         }
 
         public override void Exit()
@@ -60,15 +72,16 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.PushableDetector.OnPushableDetect -= HandlePushableDetect;
             StateMachine.PickableDetector.OnPickableDetect -= HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose -= HandlePickableLoose;
-            
+
             StateMachine.HitableDetector.OnHitableDetect -= HandleHitableDetect;
             StateMachine.HitableDetector.OnHitableLoose -= HandleHitableLoose;
             StateMachine.InputReader.OnHit -= Hit;
-            
+
             StateMachine.PullableDetector.OnPullableDetect -= HandlePullableDetect;
             StateMachine.PullableDetector.OnPullableLoose -= HandlePullableLoose;
             StateMachine.InputReader.OnHold -= Pull;
         }
+
         private void Jump()
         {
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
@@ -88,26 +101,27 @@ namespace Code.Scripts.StateMachines.Player
         {
             _canPick = null;
         }
-        
+
         private void HandleHitableDetect(Transform hitable)
         {
             _canHit = hitable;
         }
+
         private void HandleHitableLoose(Transform hitable)
         {
             _canHit = null;
         }
- 
+
         private void HandlePullableDetect(Transform pullable)
         {
             _canPull = pullable;
         }
-        
+
         private void HandlePullableLoose(Transform pullable)
         {
             _canPull = null;
         }
-        
+
         private void Drop()
         {
             if (StateMachine.PickedItem != null)
@@ -130,15 +144,16 @@ namespace Code.Scripts.StateMachines.Player
                 StateMachine.PickedItem.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
-        
+
         private void Hit()
         {
             if (_canHit != null)
             {
                 _canHit.GetComponent<Hitable>()?.Interact();
+                _canHit.GetComponent<Lever>()?.Interact();
             }
         }
-        
+
         private void Pull()
         {
             if (_canPull != null)
@@ -146,6 +161,5 @@ namespace Code.Scripts.StateMachines.Player
                 StateMachine.SwitchState(new PlayerPullingState(StateMachine, _canPull));
             }
         }
-
     }
 }

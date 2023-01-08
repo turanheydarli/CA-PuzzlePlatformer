@@ -6,13 +6,18 @@ namespace Code.Scripts.StateMachines.Player
     {
         private Vector3 _momentum;
 
-        public PlayerJumpingState(PlayerStateMachine stateMachine) : base(stateMachine) { }
+        public PlayerJumpingState(PlayerStateMachine stateMachine) : base(stateMachine)
+        {
+        }
 
-        
+
         public override void Enter()
         {
-            StateMachine.ForceReceiver.Jump(StateMachine.jumpForce);
+            StateMachine.InputReader.OnJump += Jump;
+
+            StateMachine.ForceReceiver.AddForce(Vector3.up * StateMachine.jumpForce);
             _momentum = StateMachine.Controller.velocity;
+            _momentum += CalculateMovement();
             _momentum.y = 0f;
         }
 
@@ -24,12 +29,16 @@ namespace Code.Scripts.StateMachines.Player
             {
                 StateMachine.SwitchState(new PlayerFallingState(StateMachine));
             }
-
         }
 
         public override void Exit()
         {
+            StateMachine.InputReader.OnJump -= Jump;
+        }
+
+        private void Jump()
+        {
+            StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
         }
     }
-
 }
