@@ -15,8 +15,9 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.InputReader.OnJump += Jump;
 
-            StateMachine.ForceReceiver.AddForce(Vector3.up  * StateMachine.jumpForce);
+            StateMachine.ForceReceiver.AddForce(Vector3.up * StateMachine.jumpForce);
             _momentum = StateMachine.Controller.velocity;
+            _momentum += CalculateMovement();
             _momentum.y = 0f;
         }
 
@@ -34,7 +35,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.InputReader.OnJump -= Jump;
         }
-        
+
         private void Jump()
         {
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
