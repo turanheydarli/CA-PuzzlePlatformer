@@ -1,5 +1,4 @@
-﻿using Code.Scripts.Level;
-using Code.Scripts.Movements;
+﻿using Code.Scripts.Movements;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -49,7 +48,7 @@ namespace Code.Scripts.StateMachines.Player
 
         private void Start()
         {
-            SwitchState(new PlayerIdlingState(this));
+            SwitchState(new PlayerMovingState(this));
         }
     }
 }

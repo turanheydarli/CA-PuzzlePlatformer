@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Code.Scripts.Level
+namespace Code.Scripts
 {
     public class Lever : MonoBehaviour
     {

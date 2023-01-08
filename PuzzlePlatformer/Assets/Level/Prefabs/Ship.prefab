@@ -2997,7 +2997,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4784198102259826001}
-  - component: {fileID: 7352951101770469752}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -3080,20 +3079,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -135, z: 0}
---- !u!64 &7352951101770469752
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5273489210236151787}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &5383390469752102356
 GameObject:
   m_ObjectHideFlags: 0

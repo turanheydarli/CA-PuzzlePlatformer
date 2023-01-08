@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Code.Scripts.Level
+namespace Code.Scripts
 {
     public class LeverHandler : MonoBehaviour
     {
