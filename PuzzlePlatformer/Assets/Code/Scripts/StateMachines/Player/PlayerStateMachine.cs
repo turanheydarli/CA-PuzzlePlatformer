@@ -1,4 +1,6 @@
-﻿using Code.Scripts.Movements;
+﻿using Code.Scripts.Classes;
+using Code.Scripts.Managers;
+using Code.Scripts.Movements;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -20,6 +22,7 @@ namespace Code.Scripts.StateMachines.Player
 
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
 
+        public CheckPoint CheckPoint { get;  set; }
         public Transform PickedItem { get; set; }
 
         public InputReader InputReader { get; private set; }
@@ -42,13 +45,14 @@ namespace Code.Scripts.StateMachines.Player
             PushableDetector = FindObjectOfType<PushableDetector>();
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
-
+            CheckPoint = ESDataManager.Instance.gameData.checkPoint;
+                
             MainCameraTransform = Camera.main.transform;
         }
 
         private void Start()
         {
-            SwitchState(new PlayerMovingState(this));
+            SwitchState(new PlayerSleepingState(this));
         }
     }
 }

@@ -6,17 +6,10 @@ using UnityEngine;
 
 namespace Code.Scripts.Managers
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraManager : BaseManager<CameraManager>
     {
         [SerializeField] public List<CameraDictionary> virtualCameras;
-
-        public static CameraManager Instance { get; private set; }
-
-        private void Awake()
-        {
-            Instance ??= this;
-        }
-
+       
         void Start()
         {
             foreach (Transform cameraTransform in transform)
