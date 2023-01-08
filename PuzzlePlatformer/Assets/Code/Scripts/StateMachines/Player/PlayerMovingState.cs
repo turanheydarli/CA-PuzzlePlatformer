@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Code.Scripts.Level;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player

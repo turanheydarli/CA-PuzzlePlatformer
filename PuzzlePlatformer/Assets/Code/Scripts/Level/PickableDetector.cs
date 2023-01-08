@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Code.Scripts
+namespace Code.Scripts.Level
 {
     public class PickableDetector : MonoBehaviour
     {
@@ -15,7 +15,6 @@ namespace Code.Scripts
                 OnPickableDetect?.Invoke(other.transform);
             }
         }
-
         
         private void OnTriggerExit(Collider other)
         {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4099382746157097791}
   - component: {fileID: 1102314790140783770}
   - component: {fileID: 2929805137521203280}
+  - component: {fileID: -6058917757110709359}
   m_Layer: 0
   m_Name: Cave Exit
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-6058917757110709359
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3722293604362713477}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4034531588652770837, guid: f116d628115437e498121b97d96620ff, type: 3}
