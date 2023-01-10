@@ -7,7 +7,9 @@ namespace Code.Scripts.Managers
     public class ESDataManager : BaseManager<ESDataManager>
     {
         private const string DataKey = "gameData";
-
+        
+        [SerializeField] private GameData startData;
+        
         [SerializeField] public GameData gameData;
 
         private void Awake()
@@ -20,6 +22,11 @@ namespace Code.Scripts.Managers
             if (ES3.FileExists())
             {
                 if (ES3.KeyExists(DataKey)) gameData = ES3.Load(DataKey, gameData);
+            }
+            else
+            {
+                gameData = startData;
+                Save();
             }
         }
 

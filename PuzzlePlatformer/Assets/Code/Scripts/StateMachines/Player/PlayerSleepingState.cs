@@ -1,18 +1,23 @@
-﻿using Code.Scripts.Managers;
+﻿using Code.Scripts.Classes;
+using Code.Scripts.Managers;
 using DG.Tweening;
 
 namespace Code.Scripts.StateMachines.Player
 {
     public class PlayerSleepingState : PlayerBaseState
     {
+        private CheckPoint _checkPoint;
+
         public PlayerSleepingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter()
         {
+            _checkPoint = ESDataManager.Instance.GetCheckPoint();
+
             StateMachine.InputReader.OnJump += JumpToStart;
-            StateMachine.transform.position = StateMachine.CheckPoint.sleepPoint;
+            StateMachine.transform.position = _checkPoint.sleepPoint;
             CameraManager.Instance.OpenCamera("StartLevelCamera");
         }
 
@@ -27,7 +32,7 @@ namespace Code.Scripts.StateMachines.Player
 
         private void JumpToStart()
         {
-            StateMachine.transform.DOJump(StateMachine.CheckPoint.jumpPoint, 0.5f, 1, 0.5f)
+            StateMachine.transform.DOJump(_checkPoint.jumpPoint, 0.5f, 1, 0.5f)
                 .AppendCallback(ReturnToLocomotion)
                 .OnComplete(() => { CameraManager.Instance.OpenCamera("FreeLookCamera"); });
         }

@@ -22,7 +22,9 @@ namespace Code.Scripts.Level
             if (collision.transform.CompareTag("Key"))
             {
                 collision.transform.tag = "Untagged";
-                CameraManager.Instance.OpenCamera(cameraName);
+                
+                CameraManager.Instance.Discover(cameraName);
+                
                 StartCoroutine(StartOpeningAnimation());
             }
         }
@@ -31,8 +33,6 @@ namespace Code.Scripts.Level
         {
             yield return new WaitForSeconds(1f);
             _animator.SetTrigger(Opening);
-            yield return new WaitForSeconds(1f);
-            CameraManager.Instance.OpenCamera("FreeLookCamera");
         }
     }
 }

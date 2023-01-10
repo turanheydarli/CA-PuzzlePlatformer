@@ -1,4 +1,5 @@
 ﻿using Code.Scripts.Classes;
+using Code.Scripts.Level;
 using Code.Scripts.Managers;
 using Code.Scripts.Movements;
 using UnityEngine;
@@ -22,7 +23,6 @@ namespace Code.Scripts.StateMachines.Player
 
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
 
-        public CheckPoint CheckPoint { get;  set; }
         public Transform PickedItem { get; set; }
 
         public InputReader InputReader { get; private set; }
@@ -34,6 +34,8 @@ namespace Code.Scripts.StateMachines.Player
         public PullableDetector PullableDetector { get; private set; }
         public HitableDetector HitableDetector { get; private set; }
         public PickableDetector PickableDetector { get; private set; }
+        public CoinDetector CoinDetector { get; private set; }
+        public Animator Animator { get; private set; }
 
         private void Awake()
         {
@@ -41,11 +43,13 @@ namespace Code.Scripts.StateMachines.Player
             Controller = GetComponent<CharacterController>();
             ForceReceiver = GetComponent<ForceReceiver>();
             MovementHandler = GetComponent<MovementHandler>();
+            Animator = GetComponent<Animator>();
+            
             HitableDetector = FindObjectOfType<HitableDetector>();
             PushableDetector = FindObjectOfType<PushableDetector>();
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
-            CheckPoint = ESDataManager.Instance.gameData.checkPoint;
+            CoinDetector = FindObjectOfType<CoinDetector>();
                 
             MainCameraTransform = Camera.main.transform;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
@@ -9,7 +10,8 @@ namespace Code.Scripts.Managers
     public class CameraManager : BaseManager<CameraManager>
     {
         [SerializeField] public List<CameraDictionary> virtualCameras;
-       
+        [SerializeField] string defaultCamera;
+
         void Start()
         {
             foreach (Transform cameraTransform in transform)
@@ -31,14 +33,30 @@ namespace Code.Scripts.Managers
             }
         }
 
+        public void Discover(string cameraName)
+        {
+            foreach (var virtualCamera in virtualCameras)
+            {
+                virtualCamera.Value.Priority = virtualCamera.Key == cameraName ? 11 : 10;
+            }
+
+            StartCoroutine(ReturnToDefault());
+        }
+
         public void SetFollow(string cameraName, Transform objectTransform)
         {
             virtualCameras.FirstOrDefault(x => x.Key == cameraName)!.Value.Follow = objectTransform;
         }
-        
+
         public void SetLookAt(string cameraName, Transform objectTransform)
         {
             virtualCameras.FirstOrDefault(x => x.Key == cameraName)!.Value.LookAt = objectTransform;
+        }
+
+        private IEnumerator ReturnToDefault()
+        {
+            yield return new WaitForSeconds(3);
+            OpenCamera(defaultCamera);
         }
     }
 

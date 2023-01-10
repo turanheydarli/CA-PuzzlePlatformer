@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Code.Scripts.Level;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -11,6 +12,9 @@ namespace Code.Scripts.StateMachines.Player
         private Transform _canPick;
         private Transform _canHit;
         private Transform _canPull;
+        private static readonly int RunningSpeed = Animator.StringToHash("RunningSpeed");
+        private readonly int MovingBlendTreeHash = Animator.StringToHash("MovingBlendTree");
+        private const float CrossFadeDuration = 0.1f;
 
 
         public PlayerMovingState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -24,6 +28,7 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnDrop += Drop;
 
             StateMachine.PushableDetector.OnPushableDetect += HandlePushableDetect;
+            StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
 
             StateMachine.PickableDetector.OnPickableDetect += HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose += HandlePickableLoose;
@@ -43,7 +48,8 @@ namespace Code.Scripts.StateMachines.Player
 
             float targetSpeed = StateMachine.movementSpeed * _direction.magnitude;
 
-            StateMachine.currentSpeed = Mathf.MoveTowards(StateMachine.currentSpeed, targetSpeed, StateMachine.acceleration * deltaTime);
+            StateMachine.currentSpeed = Mathf.MoveTowards(StateMachine.currentSpeed, targetSpeed,
+                StateMachine.acceleration * deltaTime);
 
             if (_direction.magnitude > 0.01f)
             {
@@ -55,6 +61,8 @@ namespace Code.Scripts.StateMachines.Player
             }
 
             Move(_direction * StateMachine.currentSpeed, deltaTime);
+
+            StateMachine.Animator.SetFloat(RunningSpeed, _direction.magnitude);
 
             Vector3 velocity = StateMachine.Controller.velocity;
 
@@ -69,7 +77,9 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnHold -= Pick;
             StateMachine.InputReader.OnDrop -= Drop;
 
+            StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
             StateMachine.PushableDetector.OnPushableDetect -= HandlePushableDetect;
+
             StateMachine.PickableDetector.OnPickableDetect -= HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose -= HandlePickableLoose;
 
@@ -85,6 +95,11 @@ namespace Code.Scripts.StateMachines.Player
         private void Jump()
         {
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
+        }
+
+        private void HandleCoinDetect(Transform coin)
+        {
+            coin.GetComponent<Coin>()?.Interact();
         }
 
         private void HandlePushableDetect(ControllerColliderHit pushable)

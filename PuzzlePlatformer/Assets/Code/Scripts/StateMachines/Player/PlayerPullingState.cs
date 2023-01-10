@@ -6,6 +6,7 @@ namespace Code.Scripts.StateMachines.Player
     {
         private readonly Transform _pullable;
         private Vector3 _direction;
+        private static readonly int PullHash = Animator.StringToHash("Pulling");
 
         public PlayerPullingState(PlayerStateMachine stateMachine, Transform pullable) : base(stateMachine)
         {
@@ -14,8 +15,8 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Enter()
         {
-            StateMachine.InputReader.OnDrop += Drop;    
-
+            StateMachine.InputReader.OnDrop += Drop;
+            StateMachine.Animator.SetBool(PullHash, true);
             if (_pullable.parent.TryGetComponent(out Rigidbody connect))
                 StateMachine.HolderJoint.connectedBody = connect;
         }
@@ -36,6 +37,7 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Exit()
         {
+            StateMachine.Animator.SetBool(PullHash, false);
             StateMachine.HolderJoint.connectedBody = null;
             StateMachine.InputReader.OnDrop -= Drop;
         }

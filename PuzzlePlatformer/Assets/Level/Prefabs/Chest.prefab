@@ -114,7 +114,7 @@ Transform:
   - {fileID: 9109221288455619976}
   m_Father: {fileID: 2176754397955039872}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.3937473, y: 179.99983, z: 0.000011526414}
 --- !u!1 &5300562196297849088
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +313,7 @@ Transform:
   - {fileID: 4287069198464509050}
   m_Father: {fileID: 7267824882358888528}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 89.24489, y: 90, z: 180}
 --- !u!1 &7555523641915423172
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 7724635318737975651}
   m_Layer: 0
   m_Name: Cube.011
-  m_TagString: Pushable
+  m_TagString: Pullable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -407,7 +407,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7555523641915423172}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4213194
@@ -420,7 +420,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7555523641915423172}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4213194
@@ -457,7 +457,7 @@ Transform:
   - {fileID: 657229803381886306}
   m_Father: {fileID: 2176754397955039872}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3.1018558, y: -0.0000058407845, z: 0.00000021004755}
 --- !u!1 &8040984263930114794
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +469,8 @@ GameObject:
   - component: {fileID: 7267824882358888528}
   - component: {fileID: 6299084827805977614}
   - component: {fileID: 4132908809810510203}
+  - component: {fileID: 1540886902}
+  - component: {fileID: 1540886901}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Pushable
@@ -522,3 +524,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1540886902
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040984263930114794}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17459a6d80cbff448838ffe72c8c1fb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1540886901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040984263930114794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbac93112449ca4f99ba2c9ffc63a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraName: FirstChestCamera

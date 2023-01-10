@@ -29,8 +29,8 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Obi
     - Assembly-CSharp
+    - Obi
     - Cinemachine
     - sc.stylizedwater2.runtime
     - Obi.Editor
