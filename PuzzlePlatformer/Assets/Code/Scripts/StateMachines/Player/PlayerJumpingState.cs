@@ -18,10 +18,12 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Enter()
         {
+            StateMachine.KeyDetector.OnKeyDetect += HandleKeyDetect;
+
             StateMachine.InputReader.OnJump += Jump;
             StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
 
-            StateMachine.Animator.CrossFadeInFixedTime("Jumping", CrossFadeDuration);
+            StateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
             
             StateMachine.ForceReceiver.AddForce(Vector3.up * StateMachine.jumpForce);
             _momentum = StateMachine.Controller.velocity;
@@ -45,6 +47,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.InputReader.OnJump -= Jump;
             StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
+            StateMachine.KeyDetector.OnKeyDetect -= HandleKeyDetect;
         }
 
         private void Jump()
@@ -55,6 +58,12 @@ namespace Code.Scripts.StateMachines.Player
         private void HandleCoinDetect(Transform coin)
         {
             coin.GetComponent<Coin>()?.Interact();
+        }
+        private void HandleKeyDetect(Transform key)
+        {
+            if (StateMachine.HasKey) return;
+            StateMachine.HasKey = true;
+            key.GetComponent<Key>()?.Interact(StateMachine.HolderJoint.transform);
         }
     }
 }

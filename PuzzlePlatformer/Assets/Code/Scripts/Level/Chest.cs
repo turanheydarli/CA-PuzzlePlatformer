@@ -9,30 +9,28 @@ namespace Code.Scripts.Level
         [SerializeField] private string cameraName;
 
         private Animator _animator;
+        private bool _isOpened;
 
         private static readonly int Opening = Animator.StringToHash("Opening");
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
-        private void OnCollisionEnter(Collision collision)
+        public void Interact()
         {
-            if (collision.transform.CompareTag("Key"))
-            {
-                collision.transform.tag = "Untagged";
-                
-                CameraManager.Instance.Discover(cameraName);
-                
-                StartCoroutine(StartOpeningAnimation());
-            }
+            if (_isOpened) return;
+            _isOpened = true;
+            CameraManager.Instance.Discover(cameraName);
+            StartCoroutine(StartOpeningAnimation());
         }
 
         private IEnumerator StartOpeningAnimation()
         {
             yield return new WaitForSeconds(1f);
             _animator.SetTrigger(Opening);
+            _animator.transform.position -= new Vector3(0, -1, 0);
         }
     }
 }

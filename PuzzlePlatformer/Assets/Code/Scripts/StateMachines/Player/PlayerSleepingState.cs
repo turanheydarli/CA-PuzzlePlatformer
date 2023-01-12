@@ -1,12 +1,15 @@
 ﻿using Code.Scripts.Classes;
 using Code.Scripts.Managers;
 using DG.Tweening;
+using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
 {
     public class PlayerSleepingState : PlayerBaseState
     {
         private CheckPoint _checkPoint;
+        private static readonly int StartJumpHash = Animator.StringToHash("StartJumping");
+        private const float CrossFadeDuration = 0.1f;
 
         public PlayerSleepingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
@@ -32,7 +35,8 @@ namespace Code.Scripts.StateMachines.Player
 
         private void JumpToStart()
         {
-            StateMachine.transform.DOJump(_checkPoint.jumpPoint, 0.5f, 1, 0.5f)
+            StateMachine.Animator.CrossFadeInFixedTime(StartJumpHash, CrossFadeDuration);
+            StateMachine.transform.DOJump(_checkPoint.jumpPoint, 0.5f, 1, 1f)
                 .AppendCallback(ReturnToLocomotion)
                 .OnComplete(() => { CameraManager.Instance.OpenCamera("FreeLookCamera"); });
         }

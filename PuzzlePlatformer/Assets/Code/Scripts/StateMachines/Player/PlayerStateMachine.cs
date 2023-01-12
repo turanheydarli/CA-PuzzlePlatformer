@@ -1,6 +1,4 @@
-﻿using Code.Scripts.Classes;
-using Code.Scripts.Level;
-using Code.Scripts.Managers;
+﻿using Code.Scripts.Level;
 using Code.Scripts.Movements;
 using UnityEngine;
 
@@ -20,11 +18,9 @@ namespace Code.Scripts.StateMachines.Player
         [SerializeField] public float pullingMovementSpeed = 3f;
         [SerializeField] public float pullingSmoothTurnTime = 0.07f;
 
-
-        [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
-
         public Transform PickedItem { get; set; }
-
+        public bool HasKey { get; set; }
+        [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
         public InputReader InputReader { get; private set; }
         public CharacterController Controller { get; private set; }
         public Transform MainCameraTransform { get; private set; }
@@ -35,6 +31,7 @@ namespace Code.Scripts.StateMachines.Player
         public HitableDetector HitableDetector { get; private set; }
         public PickableDetector PickableDetector { get; private set; }
         public CoinDetector CoinDetector { get; private set; }
+        public KeyDetector KeyDetector { get; private set; }
         public Animator Animator { get; private set; }
 
         private void Awake()
@@ -50,6 +47,7 @@ namespace Code.Scripts.StateMachines.Player
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
             CoinDetector = FindObjectOfType<CoinDetector>();
+            KeyDetector = FindObjectOfType<KeyDetector>();
                 
             MainCameraTransform = Camera.main.transform;
         }
