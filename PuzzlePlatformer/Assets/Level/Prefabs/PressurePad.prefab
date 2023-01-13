@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2277930576577630779}
-  - component: {fileID: 919132148826695745}
   - component: {fileID: 2091879720633092656}
+  - component: {fileID: 188402460753136462}
   m_Layer: 0
   m_Name: PressurePad
   m_TagString: Untagged
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &919132148826695745
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501674939841333377}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.4698753, y: 1, z: 5.386437}
-  m_Center: {x: 9.574366, y: 0.0000000042311923, z: 1.85237}
 --- !u!114 &2091879720633092656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +47,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed585ad860a6ef4eb5e4cb67a783308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 2402690412133535897}
+--- !u!135 &188402460753136462
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501674939841333377}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.867981
+  m_Center: {x: 9.610855, y: -1.0275462, z: 1.8549252}
 --- !u!1 &2621325855077105536
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2621325855077105536}
   m_LocalRotation: {x: 0.000000059604645, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.610153, y: 0.000000029802322, z: 1.8664521}
+  m_LocalPosition: {x: 9.610153, y: 0, z: 1.8664521}
   m_LocalScale: {x: 0.59629494, y: 0.59629494, z: 0.59629494}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -121,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: fba47f077714ab94caee0c599d498d7d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,7 +205,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9deda4db05f19a444810c53f4cd8a342, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

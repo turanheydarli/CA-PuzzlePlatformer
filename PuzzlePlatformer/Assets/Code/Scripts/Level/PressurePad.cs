@@ -2,10 +2,13 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Code.Scripts
+namespace Code.Scripts.Level
 {
     public class PressurePad : MonoBehaviour
     {
+
+        [SerializeField] private Transform button;
+
         public event Action OnButtonPress;
         public event Action OnButtonRelease;
 
@@ -13,17 +16,16 @@ namespace Code.Scripts
         {
             if (other.CompareTag("Pushable"))
             {
-                transform.DOScale(new Vector3(1, 0.1f, 1), 0.1f);
+                button.DOLocalMoveY(-1, 0.2f);
                 OnButtonPress?.Invoke();
             }
         }
-
 
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Pushable"))
             {
-                transform.DOScale(new Vector3(1, 1, 1), 0.1f);
+                button.DOLocalMoveY(0, 0.2f);
                 OnButtonRelease?.Invoke();
             }
         }

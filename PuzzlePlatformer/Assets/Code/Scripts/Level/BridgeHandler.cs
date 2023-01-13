@@ -1,4 +1,5 @@
 using System.Collections;
+using Code.Scripts.Level;
 using UnityEngine;
 
 namespace Code.Scripts
@@ -6,6 +7,7 @@ namespace Code.Scripts
     public class BridgeHandler : MonoBehaviour
     {
         [SerializeField] private PressurePad pressurePad;
+        [SerializeField] private float openingDuration = 0.1f;
         private void Start()
         {
             pressurePad.OnButtonPress += HandleBridgeOpening;
@@ -27,7 +29,7 @@ namespace Code.Scripts
             foreach (Transform piece in transform)
             {
                 piece.gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(openingDuration);
             }
         }
         

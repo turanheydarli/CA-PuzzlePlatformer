@@ -9,10 +9,9 @@ namespace Code.Scripts.Level
         {
             if (hit.transform.CompareTag("Pushable"))
             {
-                if (TryGetComponent(out PlayerStateMachine playerStateMachine) && playerStateMachine.HasKey)
+                if (TryGetComponent(out PlayerStateMachine playerStateMachine))
                 {
-                    hit.transform.GetComponent<Chest>()?.Interact();
-                    playerStateMachine.HasKey = false;
+                    hit.transform.GetComponentInChildren<Chest>()?.Interact(playerStateMachine);
                 }
             }
         }
