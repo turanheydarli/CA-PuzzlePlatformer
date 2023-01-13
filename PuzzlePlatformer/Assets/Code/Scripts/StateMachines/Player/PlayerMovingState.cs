@@ -70,9 +70,14 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.Animator.SetFloat(RunningSpeed, StateMachine.currentSpeed);
 
             Vector3 velocity = StateMachine.Controller.velocity;
-
+           
+            if (velocity.y < -5f)
+            {
+                StateMachine.SwitchState(new PlayerFallingState(StateMachine));
+            }
+           
             _previousVelocity = new Vector3(velocity.x, 0, velocity.z);
-
+            
             StateMachine.currentSpeed = _previousVelocity.magnitude;
         }
 

@@ -6,6 +6,7 @@ namespace Code.Scripts.StateMachines.Player
     public class PlayerFallingState : PlayerBaseState
     {
         private Vector3 _momentum;
+        
         private readonly int FallHash = Animator.StringToHash("Falling");
         private const float CrossFadeDuration = 0.1f;
 
@@ -17,7 +18,8 @@ namespace Code.Scripts.StateMachines.Player
         public override void Enter()
         {
             StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
-            // StateMachine.Animator.CrossFadeInFixedTime(FallHash, CrossFadeDuration);
+            
+            StateMachine.Animator.CrossFadeInFixedTime(FallHash, CrossFadeDuration);
 
             _momentum = StateMachine.Controller.velocity;
             _momentum.y = 0f;
