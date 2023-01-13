@@ -7,19 +7,23 @@ namespace Code.Scripts.StateMachines.Player
         private Vector3 _direction;
         private Transform _canPull;
         private readonly ControllerColliderHit _pushable;
-        
+
+        private readonly int PushHash = Animator.StringToHash("Pushing");
+
         public PlayerPushingState(PlayerStateMachine stateMachine, ControllerColliderHit pushable) : base(stateMachine)
         {
             _pushable = pushable;
         }
 
-        
+
         public override void Enter()
         {
             StateMachine.InputReader.OnJump += Jump;
 
+            StateMachine.Animator.SetBool(PushHash, true);
+
             StateMachine.PushableDetector.OnPushableDetect += Push;
-            
+
             StateMachine.PullableDetector.OnPullableDetect += HandlePullableDetect;
             StateMachine.PullableDetector.OnPullableLoose += HandlePullableLoose;
             StateMachine.InputReader.OnHold += Pull;
@@ -33,7 +37,7 @@ namespace Code.Scripts.StateMachines.Player
             {
                 ReturnToLocomotion();
             }
-            
+
             if (_direction.magnitude > 0.01f)
             {
                 float targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
@@ -51,6 +55,8 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.InputReader.OnJump -= Jump;
             
+            StateMachine.Animator.SetBool(PushHash, false);
+
             StateMachine.PullableDetector.OnPullableDetect -= HandlePullableDetect;
             StateMachine.PullableDetector.OnPullableLoose -= HandlePullableLoose;
             StateMachine.InputReader.OnHold -= Pull;
@@ -60,12 +66,12 @@ namespace Code.Scripts.StateMachines.Player
         {
             _canPull = pullable;
         }
-        
+
         private void HandlePullableLoose(Transform pullable)
         {
             _canPull = null;
         }
-        
+
         private void Jump()
         {
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
@@ -78,11 +84,11 @@ namespace Code.Scripts.StateMachines.Player
                 StateMachine.SwitchState(new PlayerPullingState(StateMachine, _canPull));
             }
         }
-        
+
         private void Push(ControllerColliderHit hit)
         {
-             Rigidbody pushableRigidbody = _pushable.rigidbody;
-            
+            Rigidbody pushableRigidbody = _pushable.rigidbody;
+
             if (pushableRigidbody != null && !pushableRigidbody.isKinematic)
             {
                 pushableRigidbody.velocity = _pushable.moveDirection * StateMachine.pushingForce;

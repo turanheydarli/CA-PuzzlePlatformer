@@ -11,9 +11,11 @@ namespace Code.Scripts.DWAnimations
 
         void Start()
         {
+            Physics.autoSyncTransforms = true;
+            
             if (isAnimated)
             {
-                transform.DOMove(goTo, duration).SetLoops(-1, LoopType.Yoyo);
+                transform.DOLocalMove(goTo, duration).SetLoops(-1, LoopType.Yoyo);
             }
         }
 

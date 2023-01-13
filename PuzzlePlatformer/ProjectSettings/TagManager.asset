@@ -8,6 +8,8 @@ TagManager:
   - Key
   - Hitable
   - Pushable
+  - Coin
+  - Pickable
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - InAction
   - Holdable
-  - 
+  - Collectable
   - 
   - 
   - 

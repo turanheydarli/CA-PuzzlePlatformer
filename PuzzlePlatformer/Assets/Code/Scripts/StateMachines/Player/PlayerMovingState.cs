@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Code.Scripts.Level;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -12,6 +13,10 @@ namespace Code.Scripts.StateMachines.Player
         private Transform _canHit;
         private Transform _canPull;
 
+        private static readonly int RunningSpeed = Animator.StringToHash("RunningSpeed");
+        private static readonly int MovingBlendTreeHash = Animator.StringToHash("MovingBlendTree");
+        private const float CrossFadeDuration = 0.1f;
+
 
         public PlayerMovingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
@@ -19,14 +24,19 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Enter()
         {
+            StateMachine.Animator.CrossFadeInFixedTime(MovingBlendTreeHash, CrossFadeDuration);
+
             StateMachine.InputReader.OnJump += Jump;
             StateMachine.InputReader.OnHold += Pick;
             StateMachine.InputReader.OnDrop += Drop;
 
             StateMachine.PushableDetector.OnPushableDetect += HandlePushableDetect;
+            StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
 
             StateMachine.PickableDetector.OnPickableDetect += HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose += HandlePickableLoose;
+
+            StateMachine.KeyDetector.OnKeyDetect += HandleKeyDetect;
 
             StateMachine.HitableDetector.OnHitableDetect += HandleHitableDetect;
             StateMachine.HitableDetector.OnHitableLoose += HandleHitableLoose;
@@ -43,7 +53,8 @@ namespace Code.Scripts.StateMachines.Player
 
             float targetSpeed = StateMachine.movementSpeed * _direction.magnitude;
 
-            StateMachine.currentSpeed = Mathf.MoveTowards(StateMachine.currentSpeed, targetSpeed, StateMachine.acceleration * deltaTime);
+            StateMachine.currentSpeed = Mathf.MoveTowards(StateMachine.currentSpeed, targetSpeed,
+                StateMachine.acceleration * deltaTime);
 
             if (_direction.magnitude > 0.01f)
             {
@@ -55,6 +66,8 @@ namespace Code.Scripts.StateMachines.Player
             }
 
             Move(_direction * StateMachine.currentSpeed, deltaTime);
+
+            StateMachine.Animator.SetFloat(RunningSpeed, StateMachine.currentSpeed);
 
             Vector3 velocity = StateMachine.Controller.velocity;
 
@@ -69,9 +82,13 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnHold -= Pick;
             StateMachine.InputReader.OnDrop -= Drop;
 
+            StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
             StateMachine.PushableDetector.OnPushableDetect -= HandlePushableDetect;
+
             StateMachine.PickableDetector.OnPickableDetect -= HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose -= HandlePickableLoose;
+
+            StateMachine.KeyDetector.OnKeyDetect -= HandleKeyDetect;
 
             StateMachine.HitableDetector.OnHitableDetect -= HandleHitableDetect;
             StateMachine.HitableDetector.OnHitableLoose -= HandleHitableLoose;
@@ -85,6 +102,11 @@ namespace Code.Scripts.StateMachines.Player
         private void Jump()
         {
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
+        }
+
+        private void HandleCoinDetect(Transform coin)
+        {
+            coin.GetComponent<Coin>()?.Interact();
         }
 
         private void HandlePushableDetect(ControllerColliderHit pushable)
@@ -122,44 +144,40 @@ namespace Code.Scripts.StateMachines.Player
             _canPull = null;
         }
 
+        private void HandleKeyDetect(Transform key)
+        {
+            if (StateMachine.HasKey) return;
+            StateMachine.HasKey = true;
+            key.GetComponent<Key>()?.Interact(StateMachine.HolderJoint.transform);
+        }
+
         private void Drop()
         {
-            if (StateMachine.PickedItem != null)
-            {
-                StateMachine.PickedItem.GetComponent<Rigidbody>().isKinematic = false;
-                StateMachine.PickedItem.parent = null;
-            }
+            if (StateMachine.PickedItem == null) return;
+            StateMachine.PickedItem.GetComponent<Rigidbody>().isKinematic = false;
+            StateMachine.PickedItem.parent = null;
         }
 
         private void Pick()
         {
-            if (_canPick != null)
-            {
-                StateMachine.PickedItem = _canPick;
-
-                StateMachine.PickedItem.parent = StateMachine.HolderJoint.transform;
-
-                StateMachine.PickedItem.transform.DOLocalJump(Vector3.zero, 0.5f, 1, 0.3f);
-
-                StateMachine.PickedItem.GetComponent<Rigidbody>().isKinematic = true;
-            }
+            if (_canPick == null) return;
+            StateMachine.PickedItem = _canPick;
+            StateMachine.PickedItem.parent = StateMachine.HolderJoint.transform;
+            StateMachine.PickedItem.transform.DOLocalJump(Vector3.zero, 0.5f, 1, 0.3f);
+            StateMachine.PickedItem.GetComponent<Rigidbody>().isKinematic = true;
         }
 
         private void Hit()
         {
-            if (_canHit != null)
-            {
-                _canHit.GetComponent<Hitable>()?.Interact();
-                _canHit.GetComponent<Lever>()?.Interact();
-            }
+            if (_canHit == null) return;
+            _canHit.GetComponent<Hitable>()?.Interact();
+            _canHit.GetComponent<Lever>()?.Interact();
         }
 
         private void Pull()
         {
-            if (_canPull != null)
-            {
-                StateMachine.SwitchState(new PlayerPullingState(StateMachine, _canPull));
-            }
+            if (_canPull == null) return;
+            StateMachine.SwitchState(new PlayerPullingState(StateMachine, _canPull));
         }
     }
 }

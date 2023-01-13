@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 842639295278014587}
   - component: {fileID: 4332036695862800350}
   - component: {fileID: 2016076777734740756}
+  - component: {fileID: -7157551133538790672}
   m_Layer: 0
   m_Name: Hill3
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-7157551133538790672
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70499954998950593}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 01223aca5aabacd4bbba58eb5a800552, type: 3}

@@ -1,20 +1,23 @@
 using System.Collections;
+using Code.Scripts.Managers;
 using UnityEngine;
 
-namespace Code.Scripts
+namespace Code.Scripts.Level
 {
     public class LeverHandler : MonoBehaviour
     {
         public void HandleBridgeOpening()
         {
+            CameraManager.Instance.Discover("LeverDiscoverCamera");
+            
             StartCoroutine(OpeningAnimation());
         }
-        
+
         public void HandleBridgeClosing()
         {
             StartCoroutine(ClosingAnimation());
         }
-        
+
         IEnumerator OpeningAnimation()
         {
             foreach (Transform piece in transform)
@@ -23,7 +26,7 @@ namespace Code.Scripts
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        
+
         IEnumerator ClosingAnimation()
         {
             foreach (Transform piece in transform)

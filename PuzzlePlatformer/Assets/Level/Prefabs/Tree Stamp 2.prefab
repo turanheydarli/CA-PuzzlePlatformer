@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1949757752251441465}
   - component: {fileID: 3215910764226145948}
   - component: {fileID: 812269183241624150}
+  - component: {fileID: 216037644534977211}
   m_Layer: 0
   m_Name: Tree Stamp 2
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &216037644534977211
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172412499848510339}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -233698999252520813, guid: 1c733b644e62e904f81b6dba3a22d0f5, type: 3}
