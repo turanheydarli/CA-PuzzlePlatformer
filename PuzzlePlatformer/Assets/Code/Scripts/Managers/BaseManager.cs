@@ -11,7 +11,7 @@ namespace Code.Scripts.Managers
             get
             {
                 _instance ??= FindObjectOfType<TManager>();
-                DontDestroyOnLoad(_instance.gameObject);
+                //DontDestroyOnLoad(_instance.gameObject);
                 return _instance;
             }
         }

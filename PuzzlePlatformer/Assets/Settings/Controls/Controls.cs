@@ -80,6 +80,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pausing"",
+                    ""type"": ""Button"",
+                    ""id"": ""79268d41-1c2a-4a17-8b7c-f6f5b1c1f8c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Hitting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3978de4a-9dba-45a0-8cfa-1f26db660a18"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mose & Keyboard"",
+                    ""action"": ""Pausing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +243,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Holding = m_Player.FindAction("Holding", throwIfNotFound: true);
         m_Player_Picking = m_Player.FindAction("Picking", throwIfNotFound: true);
         m_Player_Hitting = m_Player.FindAction("Hitting", throwIfNotFound: true);
+        m_Player_Pausing = m_Player.FindAction("Pausing", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +309,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Holding;
     private readonly InputAction m_Player_Picking;
     private readonly InputAction m_Player_Hitting;
+    private readonly InputAction m_Player_Pausing;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -298,6 +320,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Holding => m_Wrapper.m_Player_Holding;
         public InputAction @Picking => m_Wrapper.m_Player_Picking;
         public InputAction @Hitting => m_Wrapper.m_Player_Hitting;
+        public InputAction @Pausing => m_Wrapper.m_Player_Pausing;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,6 +348,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Hitting.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHitting;
                 @Hitting.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHitting;
                 @Hitting.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHitting;
+                @Pausing.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPausing;
+                @Pausing.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPausing;
+                @Pausing.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPausing;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -347,6 +373,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Hitting.started += instance.OnHitting;
                 @Hitting.performed += instance.OnHitting;
                 @Hitting.canceled += instance.OnHitting;
+                @Pausing.started += instance.OnPausing;
+                @Pausing.performed += instance.OnPausing;
+                @Pausing.canceled += instance.OnPausing;
             }
         }
     }
@@ -368,5 +397,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnHolding(InputAction.CallbackContext context);
         void OnPicking(InputAction.CallbackContext context);
         void OnHitting(InputAction.CallbackContext context);
+        void OnPausing(InputAction.CallbackContext context);
     }
 }

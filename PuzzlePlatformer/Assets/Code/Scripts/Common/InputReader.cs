@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Code.Scripts
+namespace Code.Scripts.Common
 {
     public class InputReader : MonoBehaviour, Controls.IPlayerActions
     {
@@ -13,6 +13,7 @@ namespace Code.Scripts
         public event Action OnDrop;
         public event Action OnHit;
         public event Action OnPick;
+        public event Action OnPause;
         
 
         private Controls _controls;
@@ -66,6 +67,12 @@ namespace Code.Scripts
         {
             if (!context.performed) return;
             OnHit?.Invoke();
+        }
+
+        public void OnPausing(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            OnPause?.Invoke();
         }
     }
 }
