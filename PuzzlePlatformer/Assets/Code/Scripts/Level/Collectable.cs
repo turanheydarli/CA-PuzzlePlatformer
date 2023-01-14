@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code.Scripts.Level
 {
-    public class Coin : MonoBehaviour
+    public class Collectable : MonoBehaviour
     {
         [SerializeField] private float moveDuration = 0.6f;
         [SerializeField] private float moveTo = 4;

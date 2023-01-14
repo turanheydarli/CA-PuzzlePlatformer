@@ -17,7 +17,7 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Enter()
         {
-            StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect += HandleCollectableDetect;
             
             StateMachine.Animator.CrossFadeInFixedTime(FallHash, CrossFadeDuration);
 
@@ -37,12 +37,12 @@ namespace Code.Scripts.StateMachines.Player
 
         public override void Exit()
         {
-            StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect -= HandleCollectableDetect;
         }
 
-        private void HandleCoinDetect(Transform coin)
+        private void HandleCollectableDetect(Transform collectable)
         {
-            coin.GetComponent<Coin>()?.Interact();
+            collectable.GetComponent<Collectable>()?.Interact();
         }
     }
 }

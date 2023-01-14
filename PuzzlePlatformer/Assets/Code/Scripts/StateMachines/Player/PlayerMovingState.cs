@@ -31,7 +31,8 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnDrop += Drop;
 
             StateMachine.PushableDetector.OnPushableDetect += HandlePushableDetect;
-            StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect += HandleCollectableDetect;
+
 
             StateMachine.PickableDetector.OnPickableDetect += HandlePickableDetect;
             StateMachine.PickableDetector.OnPickableLoose += HandlePickableLoose;
@@ -87,7 +88,7 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.InputReader.OnHold -= Pick;
             StateMachine.InputReader.OnDrop -= Drop;
 
-            StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect -= HandleCollectableDetect;
             StateMachine.PushableDetector.OnPushableDetect -= HandlePushableDetect;
 
             StateMachine.PickableDetector.OnPickableDetect -= HandlePickableDetect;
@@ -109,9 +110,9 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
         }
 
-        private void HandleCoinDetect(Transform coin)
+        private void HandleCollectableDetect(Transform collectable)
         {
-            coin.GetComponent<Coin>()?.Interact();
+            collectable.GetComponent<Collectable>()?.Interact();
         }
 
         private void HandlePushableDetect(ControllerColliderHit pushable)
