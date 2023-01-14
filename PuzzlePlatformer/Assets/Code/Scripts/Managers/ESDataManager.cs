@@ -1,5 +1,4 @@
-﻿using System;
-using Code.Scripts.Classes;
+﻿using Code.Scripts.Classes;
 using UnityEngine;
 
 namespace Code.Scripts.Managers

@@ -8,7 +8,9 @@ namespace Code.Scripts.StateMachines.Player
     public class PlayerSleepingState : PlayerBaseState
     {
         private CheckPoint _checkPoint;
+        
         private static readonly int StartJumpHash = Animator.StringToHash("StartJumping");
+        private static readonly int SittingHash = Animator.StringToHash("Sitting");
         private const float CrossFadeDuration = 0.1f;
 
         public PlayerSleepingState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -18,7 +20,12 @@ namespace Code.Scripts.StateMachines.Player
         public override void Enter()
         {
             _checkPoint = ESDataManager.Instance.GetCheckPoint();
-
+            
+            if (_checkPoint.isShip)
+            {
+                StateMachine.Animator.CrossFadeInFixedTime(SittingHash, CrossFadeDuration);
+            }
+            
             StateMachine.InputReader.OnJump += JumpToStart;
             StateMachine.transform.position = _checkPoint.sleepPoint;
             CameraManager.Instance.OpenCamera("StartLevelCamera");

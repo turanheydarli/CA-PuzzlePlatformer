@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 
 namespace Code.Scripts.Managers

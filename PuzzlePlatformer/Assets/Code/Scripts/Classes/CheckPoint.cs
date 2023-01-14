@@ -7,5 +7,6 @@ namespace Code.Scripts.Classes
     {
         public Vector3 jumpPoint;
         public Vector3 sleepPoint;
+        public bool isShip;
     }
 }
