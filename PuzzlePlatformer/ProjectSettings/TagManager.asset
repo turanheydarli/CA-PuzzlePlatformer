@@ -10,6 +10,8 @@ TagManager:
   - Pushable
   - Coin
   - Pickable
+  - Strawberry
+  - Collectable
   layers:
   - Default
   - TransparentFX

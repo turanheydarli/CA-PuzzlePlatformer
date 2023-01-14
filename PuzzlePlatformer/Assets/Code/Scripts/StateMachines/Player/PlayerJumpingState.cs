@@ -21,7 +21,7 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.KeyDetector.OnKeyDetect += HandleKeyDetect;
 
             StateMachine.InputReader.OnJump += Jump;
-            StateMachine.CoinDetector.OnCoinDetect += HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect += HandleCollectableDetect;
 
             StateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
             
@@ -46,7 +46,7 @@ namespace Code.Scripts.StateMachines.Player
         public override void Exit()
         {
             StateMachine.InputReader.OnJump -= Jump;
-            StateMachine.CoinDetector.OnCoinDetect -= HandleCoinDetect;
+            StateMachine.CollectableDetector.OnCollectableDetect -= HandleCollectableDetect;
             StateMachine.KeyDetector.OnKeyDetect -= HandleKeyDetect;
         }
 
@@ -55,9 +55,9 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.SwitchState(new PlayerJumpingState(StateMachine));
         }
 
-        private void HandleCoinDetect(Transform coin)
+        private void HandleCollectableDetect(Transform collectable)
         {
-            coin.GetComponent<Coin>()?.Interact();
+            collectable.GetComponent<Collectable>()?.Interact();
         }
         private void HandleKeyDetect(Transform key)
         {

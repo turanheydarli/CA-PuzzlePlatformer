@@ -30,7 +30,7 @@ namespace Code.Scripts.StateMachines.Player
         public PullableDetector PullableDetector { get; private set; }
         public HitableDetector HitableDetector { get; private set; }
         public PickableDetector PickableDetector { get; private set; }
-        public CoinDetector CoinDetector { get; private set; }
+        public CollectableDetector CollectableDetector { get; private set; }
         public KeyDetector KeyDetector { get; private set; }
         public Animator Animator { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Code.Scripts.StateMachines.Player
             PushableDetector = FindObjectOfType<PushableDetector>();
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
-            CoinDetector = FindObjectOfType<CoinDetector>();
+            CollectableDetector = FindObjectOfType<CollectableDetector>();
             KeyDetector = FindObjectOfType<KeyDetector>();
                 
             MainCameraTransform = Camera.main.transform;
