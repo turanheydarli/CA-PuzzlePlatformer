@@ -1,4 +1,5 @@
 ﻿using Code.Scripts.Level;
+using Code.Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 
@@ -122,6 +123,8 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandlePickableDetect(Transform pickable)
         {
+            SayTrick("Tap x to pick.");
+
             _canPick = pickable;
         }
 
@@ -142,6 +145,7 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandlePullableDetect(Transform pullable)
         {
+            SayTrick("Tap x to pull.");
             _canPull = pullable;
         }
 

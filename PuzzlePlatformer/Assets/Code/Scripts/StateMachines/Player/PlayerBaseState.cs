@@ -1,3 +1,4 @@
+using Code.Scripts.Managers;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -11,7 +12,7 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine = stateMachine;
         }
 
-        
+
         protected void Move(float deltaTime)
         {
             Move(Vector3.zero, deltaTime);
@@ -21,6 +22,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.Controller.Move((motion + StateMachine.MovementHandler.Movement) * deltaTime);
         }
+
         protected void ReturnToLocomotion()
         {
             StateMachine.SwitchState(new PlayerMovingState(StateMachine));
@@ -37,7 +39,18 @@ namespace Code.Scripts.StateMachines.Player
             forward.Normalize();
             right.Normalize();
 
-            return forward * StateMachine.InputReader.MovementValue.y + right * StateMachine.InputReader.MovementValue.x;
+            return forward * StateMachine.InputReader.MovementValue.y +
+                   right * StateMachine.InputReader.MovementValue.x;
+        }
+
+        protected void SayTrick(string message)
+        {
+            DialogueManager.Instance.Say(message, 1, 1);
+        }
+
+        protected void SayMessage(string message)
+        {
+            DialogueManager.Instance.Say(message);
         }
     }
 }

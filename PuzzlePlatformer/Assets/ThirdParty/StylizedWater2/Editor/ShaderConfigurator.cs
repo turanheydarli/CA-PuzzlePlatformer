@@ -402,19 +402,26 @@ namespace StylizedWater2
 				return;
 			}
 			#endif
-			
-            if (compilerDataList[i].shaderKeywordSet.IsEnabled(keyword))
+
+            try
             {
-                compilerDataList.RemoveAt(i);
-                --i;
+                if (compilerDataList[i].shaderKeywordSet.IsEnabled(keyword))
+                {
+                    compilerDataList.RemoveAt(i);
+                    --i;
                 
-                #if ENABLE_SHADER_STRIPPING_LOG && !ENABLE_DEEP_STRIPPING_LOG
+#if ENABLE_SHADER_STRIPPING_LOG && !ENABLE_DEEP_STRIPPING_LOG
                 Debug.Log($"Stripped <b>{GetKeywordName(shader, keyword)}</b> from {shader.name}. (pass: {snippet.passName} stage: {snippet.shaderType})");
-                #endif
+#endif
 				
-				#if ENABLE_DEEP_STRIPPING_LOG
+#if ENABLE_DEEP_STRIPPING_LOG
                 File.AppendAllText(LOG_FILEPATH, "- " + $"Stripped {GetKeywordName(shader, keyword)} ({shader.name}) variant from pass {snippet.passName} (stage: {snippet.shaderType})" + "\n" );
-				#endif		
+#endif		
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
     }
