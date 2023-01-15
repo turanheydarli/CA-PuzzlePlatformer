@@ -4,5 +4,6 @@
     public class GameData
     {
         public CheckPoint checkPoint;
+        public bool hasKey;
     }
 }

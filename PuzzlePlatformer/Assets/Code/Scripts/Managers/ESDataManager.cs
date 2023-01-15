@@ -24,8 +24,7 @@ namespace Code.Scripts.Managers
             }
             else
             {
-                gameData = startData;
-                Save();
+                Reset();
             }
         }
 
@@ -33,7 +32,11 @@ namespace Code.Scripts.Managers
         {
             ES3.Save(DataKey, gameData);
         }
-
+        public void Reset()
+        {
+            gameData = startData;
+            Save();
+        }
         public CheckPoint GetCheckPoint()
         {
             return gameData.checkPoint;

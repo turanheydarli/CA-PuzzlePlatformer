@@ -20,6 +20,9 @@ namespace Code.Scripts.StateMachines.Player
         [SerializeField] public float pullingSmoothTurnTime = 0.07f;
 
         public Transform PickedItem { get; set; }
+        public int StrawberryCount { get; set; }
+        public int HealthCount { get; set; }
+        public int ChestCount { get; set; }
         public bool HasKey { get; set; }
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
         public InputReader InputReader { get; private set; }

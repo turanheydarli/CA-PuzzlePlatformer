@@ -57,6 +57,7 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandleCollectableDetect(Transform collectable)
         {
+            StateMachine.StrawberryCount++;
             collectable.GetComponent<Collectable>()?.Interact();
         }
         private void HandleKeyDetect(Transform key)

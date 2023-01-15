@@ -72,14 +72,14 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.Animator.SetFloat(RunningSpeed, StateMachine.currentSpeed);
 
             Vector3 velocity = StateMachine.Controller.velocity;
-           
+
             if (velocity.y < -5f)
             {
                 StateMachine.SwitchState(new PlayerFallingState(StateMachine));
             }
-           
+
             _previousVelocity = new Vector3(velocity.x, 0, velocity.z);
-            
+
             StateMachine.currentSpeed = _previousVelocity.magnitude;
         }
 
@@ -113,6 +113,8 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandleCollectableDetect(Transform collectable)
         {
+            StateMachine.StrawberryCount++;
+            SoundManager.Instance.Play("EatingSound");
             collectable.GetComponent<Collectable>()?.Interact();
         }
 
@@ -158,6 +160,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             if (StateMachine.HasKey) return;
             StateMachine.HasKey = true;
+            ESDataManager.Instance.gameData.hasKey = true;
             key.GetComponent<Key>()?.Interact(StateMachine.HolderJoint.transform);
         }
 
@@ -180,6 +183,7 @@ namespace Code.Scripts.StateMachines.Player
         private void Hit()
         {
             if (_canHit == null) return;
+            SoundManager.Instance.Play("LeverSound");
             _canHit.GetComponent<Hitable>()?.Interact();
             _canHit.GetComponent<Lever>()?.Interact();
         }
