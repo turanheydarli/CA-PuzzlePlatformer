@@ -1,3 +1,4 @@
+using System;
 using Code.Scripts.Classes;
 using Code.Scripts.Managers;
 using DG.Tweening;
@@ -8,6 +9,11 @@ namespace Code.Scripts.Level
 {
     public class CaveExit: MonoBehaviour
     {
+        private void Start()
+        {
+            SoundManager.Instance.Play("CaveBackgroundMusic");
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))

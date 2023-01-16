@@ -27,7 +27,7 @@ namespace Code.Scripts.StateMachines.Player
         {
             StateMachine.Animator.CrossFadeInFixedTime(MovingBlendTreeHash, CrossFadeDuration);
             CameraManager.Instance.OpenCamera("FreeLookCamera");
-            
+
             StateMachine.InputReader.OnJump += Jump;
             StateMachine.InputReader.OnHold += Pick;
             StateMachine.InputReader.OnDrop += Drop;
@@ -115,12 +115,20 @@ namespace Code.Scripts.StateMachines.Player
         private void HandleCollectableDetect(Transform collectable)
         {
             StateMachine.StrawberryCount++;
+            UIManager.Instance.SetCollectable(StateMachine.StrawberryCount);
             SoundManager.Instance.Play("EatingSound");
+            ESDataManager.Instance.gameData.strawberryCount = StateMachine.StrawberryCount;
             collectable.GetComponent<Collectable>()?.Interact();
         }
 
         private void HandlePushableDetect(ControllerColliderHit pushable)
         {
+            if (!StateMachine.KnowsPush)
+            {
+                SayMessage("You are strong enough, you can push some of these objects.");
+                StateMachine.KnowsPush = true;
+            }
+
             StateMachine.SwitchState(new PlayerPushingState(StateMachine, pushable));
         }
 
@@ -148,7 +156,7 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandlePullableDetect(Transform pullable)
         {
-            SayTrick("Tap x to pull.");
+            SayMessage("Press X and let's see what happens?");
             _canPull = pullable;
         }
 

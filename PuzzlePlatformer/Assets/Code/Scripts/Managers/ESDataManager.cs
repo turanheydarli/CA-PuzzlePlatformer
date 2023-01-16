@@ -3,18 +3,31 @@ using UnityEngine;
 
 namespace Code.Scripts.Managers
 {
-    public class ESDataManager : BaseManager<ESDataManager>
+    public class ESDataManager : MonoBehaviour
     {
-        private const string DataKey = "gameData";
-        
-        [SerializeField] private GameData startData;
-        
-        [SerializeField] public GameData gameData;
+        public static ESDataManager Instance;
 
         private void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            DontDestroyOnLoad(gameObject);
             Load();
         }
+
+        private const string DataKey = "gameData";
+
+        [SerializeField] private GameData startData;
+
+        [SerializeField] public GameData gameData;
 
         public void Load()
         {
@@ -32,11 +45,13 @@ namespace Code.Scripts.Managers
         {
             ES3.Save(DataKey, gameData);
         }
+
         public void Reset()
         {
             gameData = startData;
             Save();
         }
+
         public CheckPoint GetCheckPoint()
         {
             return gameData.checkPoint;

@@ -27,12 +27,23 @@ namespace Code.Scripts.Level
 
         public void Interact(PlayerStateMachine playerStateMachine)
         {
-            if (_isOpened || !playerStateMachine.HasKey) return;
-            playerStateMachine.HasKey = false;
-            ESDataManager.Instance.gameData.hasKey = false;
-            _isOpened = true;
-            CameraManager.Instance.Discover(cameraName);
-            StartCoroutine(StartOpeningAnimation());
+            if (_isOpened) return;
+
+            if (playerStateMachine.HasKey)
+            {
+                playerStateMachine.HasKey = false;
+                ESDataManager.Instance.gameData.hasKey = false;
+                ESDataManager.Instance.gameData.chestCount++;
+                playerStateMachine.ChestCount++;
+                UIManager.Instance.SetChest(playerStateMachine.ChestCount);
+                _isOpened = true;
+                CameraManager.Instance.Discover(cameraName);
+                StartCoroutine(StartOpeningAnimation());
+            }
+            else
+            {
+                DialogueManager.Instance.Say("Alas, we need a key to open the chest...");
+            }
         }
 
         private IEnumerator StartOpeningAnimation()
@@ -49,15 +60,12 @@ namespace Code.Scripts.Level
             _sequence.Join(parchment.DOLocalMoveY(1.36f, 0.8f));
             openingParticle.Play();
             SoundManager.Instance.Play("LeverSound");
-            DOTween.Sequence(parchment.DORotate(Vector3.up * 180, 5f)).InsertCallback(1f, () =>
-            {
-                UIManager.Instance.ShowParchment();
-            }).OnComplete(() =>
-            {
-                _sequence.Kill();
-                parchment.DOScale(0, 0.3f).OnComplete(() => Destroy(parchment.gameObject));
-            });
-            
+            DOTween.Sequence(parchment.DORotate(Vector3.up * 180, 5f))
+                .InsertCallback(1f, () => { UIManager.Instance.ShowParchment(); }).OnComplete(() =>
+                {
+                    _sequence.Kill();
+                    parchment.DOScale(0, 0.3f).OnComplete(() => Destroy(parchment.gameObject));
+                });
         }
     }
 }

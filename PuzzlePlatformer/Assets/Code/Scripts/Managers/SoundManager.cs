@@ -37,6 +37,15 @@ namespace Code.Scripts.Managers
             // For completely play all sounds without cutting some last of sounds
             s.source.Stop();
         }
+        
+        public void StopAll()
+        {
+            foreach (var sound in sounds)
+            {
+                sound.source.Stop();
+            }
+        }
+
 
         public void ChangeVolume(float volume)
         {

@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using Code.Scripts.Common;
-using Code.Scripts.StateMachines.Player;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -38,6 +36,7 @@ namespace Code.Scripts.Managers
         [Header("Pause Panel")] [SerializeField]
         private GameObject pausePanel;
 
+        [Header("End Panel")] [SerializeField] private GameObject endPanel;
         [SerializeField] private Button pauseQuitButton;
 
         private static bool _isPaused;
@@ -65,8 +64,6 @@ namespace Code.Scripts.Managers
         [Header("Game Panel")] [SerializeField]
         private TMP_Text strawberryCountText, healthCountText, chestCountText;
 
-        private PlayerStateMachine _playerStateMachine;
-
         private void Start()
         {
             Load(5f);
@@ -76,9 +73,6 @@ namespace Code.Scripts.Managers
 
             _inputReader = FindObjectOfType<InputReader>();
             _inputReader.OnPause += ControlPausePanel;
-            _playerStateMachine = FindObjectOfType<PlayerStateMachine>();
-
-            _playerStateMachine.CollectableDetector.OnCollectableDetect += HandleCollectableDetect;
 
             pauseQuitButton.onClick.AddListener(ControlQuitPanel);
 
@@ -90,9 +84,9 @@ namespace Code.Scripts.Managers
             quitNoButton.onClick.AddListener(ControlQuitPanel);
         }
 
-        private void HandleCollectableDetect(Transform obj)
+        public void SetCollectable(int collectableCount)
         {
-            strawberryCountText.text = (_playerStateMachine.StrawberryCount + 1) + "x";
+            strawberryCountText.text = "x" + (collectableCount);
         }
 
         private void ControlHomePanel()
@@ -131,6 +125,7 @@ namespace Code.Scripts.Managers
 
         public void StartNewGame()
         {
+            SoundManager.Instance.StopAll();
             ControlHomePanel();
             Load(5f);
             ESDataManager.Instance.Reset();
@@ -160,12 +155,17 @@ namespace Code.Scripts.Managers
 
         public void SetHealth(int health)
         {
-            healthCountText.text = health + "x";
+            healthCountText.text = "x" + health;
         }
-        
+
         public void SetChest(int chestCount)
         {
-            chestCountText.text = chestCount + "x";
+            chestCountText.text = "x" + chestCount;
+        }
+
+        public void ShowEnd()
+        {
+            endPanel.SetActive(true);
         }
     }
 }

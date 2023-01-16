@@ -11,7 +11,7 @@ namespace Code.Scripts.Level
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Player")) return;
-            
+
             other.TryGetComponent(out PlayerStateMachine playerStateMachine);
 
             if (playerStateMachine.HealthCount <= 0)
@@ -21,11 +21,12 @@ namespace Code.Scripts.Level
             else
             {
                 playerStateMachine.HealthCount--;
+                ESDataManager.Instance.gameData.healthCount--;
                 UIManager.Instance.SetHealth(playerStateMachine.HealthCount);
             }
 
             DOTween.KillAll();
-
+            SoundManager.Instance.StopAll();
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
     }
