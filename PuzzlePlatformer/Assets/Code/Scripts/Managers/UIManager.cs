@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Code.Scripts.Common;
 using Code.Scripts.StateMachines.Player;
@@ -9,13 +10,30 @@ using UnityEngine.UI;
 
 namespace Code.Scripts.Managers
 {
-    public class UIManager : BaseManager<UIManager>
+    public class UIManager : MonoBehaviour
     {
+        public static UIManager Instance;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            DontDestroyOnLoad(gameObject);
+        }
+
         [Header("Home Panel")] [SerializeField]
         private GameObject homePanel;
 
         [SerializeField] private Button homeQuitButton, homeContinueButton, homeSettingsButton, newGameButton;
-        private static bool _isHome = true;
+        private bool _isHome = true;
 
         [Header("Pause Panel")] [SerializeField]
         private GameObject pausePanel;
@@ -111,8 +129,10 @@ namespace Code.Scripts.Managers
             _isLoading = !_isLoading;
         }
 
-        private void StartNewGame()
+        public void StartNewGame()
         {
+            ControlHomePanel();
+            Load(5f);
             ESDataManager.Instance.Reset();
             SceneManager.LoadSceneAsync(0);
         }
@@ -136,6 +156,16 @@ namespace Code.Scripts.Managers
             ControlLoadingPanel();
             yield return new WaitForSeconds(lifetime);
             ControlLoadingPanel();
+        }
+
+        public void SetHealth(int health)
+        {
+            healthCountText.text = health + "x";
+        }
+        
+        public void SetChest(int chestCount)
+        {
+            chestCountText.text = chestCount + "x";
         }
     }
 }

@@ -19,6 +19,8 @@ namespace Code.Scripts.Level
                     isShip = false
                 });
 
+                CameraManager.Instance.OpenCamera("CaveStartCamera");
+
                 DOTween.KillAll();
                 UIManager.Instance.Load(5);
                 SceneManager.LoadSceneAsync("Level1_Cave");

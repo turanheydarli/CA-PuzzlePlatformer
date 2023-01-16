@@ -20,9 +20,9 @@ namespace Code.Scripts.StateMachines.Player
         [SerializeField] public float pullingSmoothTurnTime = 0.07f;
 
         public Transform PickedItem { get; set; }
-        public int StrawberryCount { get; set; }
-        public int HealthCount { get; set; }
-        public int ChestCount { get; set; }
+        public int StrawberryCount { get; set; } = 0;
+        public int HealthCount { get; set; } = 3;
+        public int ChestCount { get; set; } = 0;
         public bool HasKey { get; set; }
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
         public InputReader InputReader { get; private set; }
@@ -45,14 +45,14 @@ namespace Code.Scripts.StateMachines.Player
             ForceReceiver = GetComponent<ForceReceiver>();
             MovementHandler = GetComponent<MovementHandler>();
             Animator = GetComponent<Animator>();
-            
+
             HitableDetector = FindObjectOfType<HitableDetector>();
             PushableDetector = FindObjectOfType<PushableDetector>();
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
             CollectableDetector = FindObjectOfType<CollectableDetector>();
             KeyDetector = FindObjectOfType<KeyDetector>();
-                
+
             MainCameraTransform = Camera.main.transform;
         }
 

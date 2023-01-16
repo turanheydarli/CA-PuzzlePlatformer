@@ -18,6 +18,8 @@ namespace Code.Scripts.Level
                     sleepPoint = new Vector3(31.46f, -3.8f, 24.98f),
                     isShip = false
                 });
+                
+                CameraManager.Instance.OpenCamera("CaveExitCamera");
 
                 DOTween.KillAll();
                 UIManager.Instance.Load(5);

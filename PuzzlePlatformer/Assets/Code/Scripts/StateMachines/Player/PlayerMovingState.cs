@@ -26,7 +26,8 @@ namespace Code.Scripts.StateMachines.Player
         public override void Enter()
         {
             StateMachine.Animator.CrossFadeInFixedTime(MovingBlendTreeHash, CrossFadeDuration);
-
+            CameraManager.Instance.OpenCamera("FreeLookCamera");
+            
             StateMachine.InputReader.OnJump += Jump;
             StateMachine.InputReader.OnHold += Pick;
             StateMachine.InputReader.OnDrop += Drop;

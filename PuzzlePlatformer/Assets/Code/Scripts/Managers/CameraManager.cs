@@ -9,6 +9,7 @@ namespace Code.Scripts.Managers
 {
     public class CameraManager : DestroyableManager<CameraManager>
     {
+        
         [SerializeField] public List<CameraDictionary> virtualCameras;
         [SerializeField] string defaultCamera;
 

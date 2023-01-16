@@ -15,6 +15,7 @@ namespace Code.Scripts.Managers
                     _instance = FindObjectOfType<TManager>();
                     DontDestroyOnLoad(_instance);
                 }
+                
                 return _instance;
             }
         }

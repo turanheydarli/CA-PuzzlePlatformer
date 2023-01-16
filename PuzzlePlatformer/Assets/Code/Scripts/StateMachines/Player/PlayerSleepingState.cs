@@ -8,7 +8,8 @@ namespace Code.Scripts.StateMachines.Player
     public class PlayerSleepingState : PlayerBaseState
     {
         private CheckPoint _checkPoint;
-        
+
+        private static readonly int JumpHash = Animator.StringToHash("Jumping");
         private static readonly int StartJumpHash = Animator.StringToHash("StartJumping");
         private static readonly int SittingHash = Animator.StringToHash("Sitting");
         private const float CrossFadeDuration = 0.1f;
@@ -20,15 +21,15 @@ namespace Code.Scripts.StateMachines.Player
         public override void Enter()
         {
             _checkPoint = ESDataManager.Instance.GetCheckPoint();
-            
+
             if (_checkPoint.isShip)
             {
+                CameraManager.Instance.OpenCamera("StartLevelCamera");
                 StateMachine.Animator.CrossFadeInFixedTime(SittingHash, CrossFadeDuration);
             }
-            
+
             StateMachine.InputReader.OnJump += JumpToStart;
             StateMachine.transform.position = _checkPoint.sleepPoint;
-            CameraManager.Instance.OpenCamera("StartLevelCamera");
         }
 
         public override void Trick(float deltaTime)
@@ -42,10 +43,16 @@ namespace Code.Scripts.StateMachines.Player
 
         private void JumpToStart()
         {
-            StateMachine.Animator.CrossFadeInFixedTime(StartJumpHash, CrossFadeDuration);
-            StateMachine.transform.DOJump(_checkPoint.jumpPoint, 0.5f, 1, 1f)
-                .AppendCallback(ReturnToLocomotion)
-                .OnComplete(() => { CameraManager.Instance.OpenCamera("FreeLookCamera"); });
+            if (_checkPoint.isShip)
+            {
+                StateMachine.Animator.CrossFadeInFixedTime(StartJumpHash, CrossFadeDuration);
+                StateMachine.transform.DOJump(_checkPoint.jumpPoint, 0.5f, 1, 1f).AppendCallback(ReturnToLocomotion);
+            }
+            else
+            {
+                StateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
+                DOTween.Sequence().InsertCallback(0.6f, ReturnToLocomotion);
+            }
         }
     }
 }
