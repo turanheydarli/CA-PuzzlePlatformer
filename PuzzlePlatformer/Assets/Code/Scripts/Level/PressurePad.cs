@@ -1,4 +1,5 @@
 using System;
+using Code.Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace Code.Scripts.Level
         {
             if (other.CompareTag("Pushable"))
             {
+                CameraManager.Instance.Discover("BridgePlatformCamera");
                 button.DOLocalMoveY(-1, 0.2f);
                 OnButtonPress?.Invoke();
             }

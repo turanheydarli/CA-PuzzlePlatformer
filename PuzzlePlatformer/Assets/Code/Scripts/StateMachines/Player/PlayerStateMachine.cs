@@ -1,5 +1,6 @@
 ﻿using Code.Scripts.Common;
 using Code.Scripts.Level;
+using Code.Scripts.Managers;
 using Code.Scripts.Movements;
 using UnityEngine;
 
@@ -20,7 +21,11 @@ namespace Code.Scripts.StateMachines.Player
         [SerializeField] public float pullingSmoothTurnTime = 0.07f;
 
         public Transform PickedItem { get; set; }
+        public int StrawberryCount { get; set; }
+        public int HealthCount { get; set; }
+        public int ChestCount { get; set; } 
         public bool HasKey { get; set; }
+        public bool KnowsPush { get; set; }
         [field: SerializeField] public HingeJoint HolderJoint { get; private set; }
         public InputReader InputReader { get; private set; }
         public CharacterController Controller { get; private set; }
@@ -42,14 +47,19 @@ namespace Code.Scripts.StateMachines.Player
             ForceReceiver = GetComponent<ForceReceiver>();
             MovementHandler = GetComponent<MovementHandler>();
             Animator = GetComponent<Animator>();
-            
+
             HitableDetector = FindObjectOfType<HitableDetector>();
             PushableDetector = FindObjectOfType<PushableDetector>();
             PullableDetector = FindObjectOfType<PullableDetector>();
             PickableDetector = FindObjectOfType<PickableDetector>();
             CollectableDetector = FindObjectOfType<CollectableDetector>();
+            
             KeyDetector = FindObjectOfType<KeyDetector>();
-                
+            StrawberryCount = ESDataManager.Instance.gameData.strawberryCount;
+            HealthCount = ESDataManager.Instance.gameData.healthCount;
+            ChestCount = ESDataManager.Instance.gameData.chestCount;
+            HasKey = ESDataManager.Instance.gameData.hasKey;
+            
             MainCameraTransform = Camera.main.transform;
         }
 

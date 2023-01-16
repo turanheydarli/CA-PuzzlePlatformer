@@ -1,4 +1,5 @@
 ﻿using Code.Scripts.Level;
+using Code.Scripts.Managers;
 using UnityEngine;
 
 namespace Code.Scripts.StateMachines.Player
@@ -8,7 +9,7 @@ namespace Code.Scripts.StateMachines.Player
         private Vector3 _momentum;
 
         private const float CrossFadeDuration = 0.1f;
-        
+
         private static readonly int JumpHash = Animator.StringToHash("Jumping");
 
         public PlayerJumpingState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -24,14 +25,13 @@ namespace Code.Scripts.StateMachines.Player
             StateMachine.CollectableDetector.OnCollectableDetect += HandleCollectableDetect;
 
             StateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
-            
+
             StateMachine.ForceReceiver.AddForce(Vector3.up * StateMachine.jumpForce);
             _momentum = StateMachine.Controller.velocity;
             _momentum += CalculateMovement();
             _momentum.y = 0f;
         }
 
-        
 
         public override void Trick(float deltaTime)
         {
@@ -57,12 +57,18 @@ namespace Code.Scripts.StateMachines.Player
 
         private void HandleCollectableDetect(Transform collectable)
         {
+            StateMachine.StrawberryCount++;
+            UIManager.Instance.SetCollectable(StateMachine.StrawberryCount);
+            ESDataManager.Instance.gameData.strawberryCount = StateMachine.StrawberryCount;
+            SoundManager.Instance.Play("EatingSound");
             collectable.GetComponent<Collectable>()?.Interact();
         }
+
         private void HandleKeyDetect(Transform key)
         {
             if (StateMachine.HasKey) return;
             StateMachine.HasKey = true;
+            ESDataManager.Instance.gameData.hasKey = true;
             key.GetComponent<Key>()?.Interact(StateMachine.HolderJoint.transform);
         }
     }
